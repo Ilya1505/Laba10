@@ -262,17 +262,18 @@ public:
 		cout << "Цена: ";
 		cin >> price;
 		if (price<=0) throw exception("Введена неккоректная цена авто!!!");
-		bool f;
-		do{
-			f = false;
-			try{ dvs.Read(); }
-			catch (exception &ex)
-			{
-				cout << "Ошибка ввода: " << ex.what() << endl;
-				cout << "Повторите попытку ввода!" << endl;
-				f = true;
-			}
-		} while (f);
+		dvs.Read();
+		//bool f;
+		//do{
+		//	f = false;
+		//	try{ dvs.Read(); }
+		//	catch (exception &ex)
+		//	{
+		//		cout << "Ошибка ввода: " << ex.what() << endl;
+		//		cout << "Повторите попытку ввода!" << endl;
+		//		f = true;
+		//	}
+		//} while (f);
 	}
 	void Modern(double NewWeight, int NewPower, int NewResurs)// модернизация
 	{
@@ -289,6 +290,8 @@ public:
 
 void Drive(cars *avto, int km)// возврат значений через указатель
 {
+	if (km<1) throw MyException("Ошибка, некорректное расстояние тест-драйва!", 0);
+	if (km>100)throw MyException("Ошибка, некорректное расстояние тест-драйва!", 1);
 	int ProbegAfterDrive;
 	ProbegAfterDrive = avto->dvs.GetProbeg() + km;
 	avto->dvs.SetProbeg(ProbegAfterDrive);
@@ -316,7 +319,15 @@ int _tmain(int argc, _TCHAR* argv[])
 	} while (f);
 	printf("\nДанные после ввода:");
 	avto.OutputCars();
-	Drive(&avto, 10);
+	try{ Drive(&avto, 10); }
+	catch (MyException &ex)
+	{
+		cout << ex.what() << endl;
+		cout << "Код ошибки: " << ex.Code() << endl;
+		cout << "завершение работы программы!";
+		getch();
+		exit(1);
+	}
 	printf("\nПосле тест-драйва:");
 	avto.OutputCars();
 	avto.Modern(100, 200, 500);
