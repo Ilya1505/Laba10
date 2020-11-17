@@ -249,17 +249,17 @@ public:
 		dvs.SetResurs(NewResurs);
 		dvs.Remont();
 	}
-	friend void Drive(cars *avto);// тест-драйв, дружественная функция для класса car
+	friend void Drive(cars *avto, int km);// тест-драйв, дружественная функция для класса car
 	~cars()
 	{
 	}
 };
 
-void Drive(cars *avto)// возврат значений через указатель
+void Drive(cars *avto, int km)// возврат значений через указатель
 {
-	int probeg;
-	probeg = avto->dvs.GetProbeg() + 10;
-	avto->dvs.SetProbeg(probeg);
+	int ProbegAfterDrive;
+	ProbegAfterDrive = avto->dvs.GetProbeg() + km;
+	avto->dvs.SetProbeg(ProbegAfterDrive);
 }
 
 int _tmain(int argc, _TCHAR* argv[])
@@ -267,30 +267,19 @@ int _tmain(int argc, _TCHAR* argv[])
 	SetConsoleCP(1251);// подключение русскоязычного ввода/вывода
 	SetConsoleOutputCP(1251);
 	system("color F0");
-	// Работа со статическими переменными
-	engine dvs1("св-01", 10, 100, 0, 400);
-	engine dvs2(dvs1);// мелкое копирование
-	dvs1.SetPower(500);// при изменении мощности у dvs1, мощность у dvs2 также меняется
-	cout << "мощность dvs2: " << dvs2.GetPower() << endl << endl;
-	cars avto1(2020, "No_Name", "No_Color", 1000, dvs1);// вызов конструктора со всеми параметрами (статич объект)
-	cars avto2(1000); // вызов конструктора с одним параметром (статич объект)
-	cars avto3; // вызов конструктора без параметров (статич объект)
-	cars *AvtoDin1 = new cars(2020, "No_Name", "No_Color", 5000, dvs1);// вызов конструктора со всеми параметрами (динамич объект)
-	cars *AvtoDin2 = new cars(1000);// вызов конструктора с одним параметром (динамич объект)
-	cars *AvtoDin3 = new cars();// вызов конструктора без параметров (динамич объект)
-	cars avto4 = avto3;// конструктор глубокого копирования
-	avto3.SetYear(2015);// при изменении year у avto3, year у avto4 не меняется
+	engine dvs("св-01", 10, 100, 0, 400);
+	cars avto(2020, "No_Name", "No_Color", 1000, dvs);
 	cout << "машина 1:";
-	avto4.OutputCars();
-	avto4.PutCars();
+	avto.OutputCars();
+	avto.PutCars();
 	printf("\nДанные после ввода:");
-	avto4.OutputCars();
-	Drive(&avto4);
+	avto.OutputCars();
+	Drive(&avto, 10);
 	printf("\nПосле тест-драйва:");
-	avto4.OutputCars();
-	avto4.Modern(100, 200, 500);
+	avto.OutputCars();
+	avto.Modern(100, 200, 500);
 	printf("\nПосле модернизации:");
-	avto4.OutputCars();
+	avto.OutputCars();
 	//Работа с массивом
 	cars avtoArray[3] = { 1000, 2000, 3000 };
 	for (int i = 0; i < 3; i++)
@@ -311,7 +300,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	}
 	for (int i = 0; i < 3; i++)
 	{
-		Drive(&avtoArray[i]);
+		Drive(&avtoArray[i], 10);
 	}
 	printf("После тест-драйва:\n");
 	for (int i = 0; i < 3; i++)
@@ -329,9 +318,6 @@ int _tmain(int argc, _TCHAR* argv[])
 		cout << endl << "Машина " << i + 1;
 		avtoArray[i].OutputCars();
 	}
-	delete AvtoDin1;
-	delete AvtoDin2;
-	delete AvtoDin3;
 	getch();
 	return 0;
 }
