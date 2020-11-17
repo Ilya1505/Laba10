@@ -248,8 +248,18 @@ public:
 		if (*year<2000||*year>2020) throw exception("Введен неккоректный год выпуска авто!!!");
 		cout << "Цена: ";
 		cin >> price;
-		if (price<0) throw exception("Введена неккоректная цена авто!!!");
-		dvs.Read();
+		if (price<=0) throw exception("Введена неккоректная цена авто!!!");
+		bool f;
+		do{
+			f = false;
+			try{ dvs.Read(); }
+			catch (exception &ex)
+			{
+				cout << "Ошибка ввода: " << ex.what() << endl;
+				cout << "Повторите попытку ввода!" << endl;
+				f = true;
+			}
+		} while (f);
 	}
 	void Modern(double NewWeight, int NewPower, int NewResurs)// модернизация
 	{
