@@ -117,14 +117,19 @@ public:
 		fflush(stdin);
 		cout << endl << "Марка двигателя: ";
 		getline(cin, name);
+		if (name=="") throw exception("Введена пустая строка марки двигателя!!!");
 		cout << "Вес двигателя: ";
 		cin >> weight;
+		if (weight <10 || weight>5000) throw exception("Введен неккоректный вес двигателя!!!");
 		cout << "Мощность двигателя: ";
 		cin >> *power;
+		if (*power <10 || *power>1500) throw exception("Введена неккоректная мощность двигателя!!!");
 		cout << "Пробег двигателя: ";
 		cin >> probeg;
+		if (probeg <0 || probeg>1000000) throw exception("Введен неккоректный пробег!!!");
 		cout << "Ресурс двигателя: ";
 		cin >> resurs;
+		if (resurs <100 || resurs>5000000) throw exception("Введен неккоректный ресурс двигателя!!!");
 	}
 	void Print()// вывод данных
 	{
@@ -233,13 +238,17 @@ public:
 		cout << endl << " Ввод данных" << endl;
 		cout << "Марка машины: ";
 		getline(cin, name);
+		if (name == "") throw exception("Введена пустая строка марки авто!!!");
 		fflush(stdin);
 		cout << "Цвет машины: ";
 		getline(cin, color);
+		if (color == "") throw exception("Введена пустая строка цвета авто!!!");
 		cout << "Год выпуска машины: ";
 		cin >> *year;
+		if (*year<2000||*year>2020) throw exception("Введен неккоректный год выпуска авто!!!");
 		cout << "Цена: ";
 		cin >> price;
+		if (price<0) throw exception("Введена неккоректная цена авто!!!");
 		dvs.Read();
 	}
 	void Modern(double NewWeight, int NewPower, int NewResurs)// модернизация
@@ -271,7 +280,17 @@ int _tmain(int argc, _TCHAR* argv[])
 	cars avto(2020, "No_Name", "No_Color", 1000, dvs);
 	cout << "машина 1:";
 	avto.OutputCars();
-	avto.PutCars();
+	bool f;
+	do{
+		f = false;
+		try{ avto.PutCars(); }
+		catch (exception &ex)
+		{
+			cout << "Ошибка ввода: " << ex.what() << endl;
+			cout << "Повторите попытку ввода!" << endl;
+			f = true;
+		}
+	} while (f);
 	printf("\nДанные после ввода:");
 	avto.OutputCars();
 	Drive(&avto, 10);
@@ -281,7 +300,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	printf("\nПосле модернизации:");
 	avto.OutputCars();
 	//Работа с массивом
-	cars avtoArray[3] = { 1000, 2000, 3000 };
+	/*cars avtoArray[3] = { 1000, 2000, 3000 };
 	for (int i = 0; i < 3; i++)
 	{
 		cout << endl << "Машина " << i + 1;
@@ -317,7 +336,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	{
 		cout << endl << "Машина " << i + 1;
 		avtoArray[i].OutputCars();
-	}
+	}*/
 	getch();
 	return 0;
 }
