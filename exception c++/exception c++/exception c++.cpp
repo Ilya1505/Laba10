@@ -277,6 +277,9 @@ public:
 	}
 	void Modern(double NewWeight, int NewPower, int NewResurs)// модернизация
 	{
+		if (NewWeight<10||NewWeight>500) throw MyException("Ошибка, некорректные данные модернизации!", 3);
+		if (NewPower<50 || NewPower>1500) throw MyException("Ошибка, некорректное данные модернизации!", 4);
+		if (NewResurs<500 || NewResurs>500000) throw MyException("Ошибка, некорректное данные модернизации!", 5);
 		dvs.SetWeight(NewWeight);
 		dvs.SetPower(NewPower);
 		dvs.SetResurs(NewResurs);
@@ -330,7 +333,15 @@ int _tmain(int argc, _TCHAR* argv[])
 	}
 	printf("\nПосле тест-драйва:");
 	avto.OutputCars();
-	avto.Modern(100, 200, 500);
+	try{ avto.Modern(100, 200, 500); }
+	catch (MyException &ex)
+	{
+		cout << ex.what() << endl;
+		cout << "Код ошибки: " << ex.Code() << endl;
+		cout << "завершение работы программы!";
+		getch();
+		exit(1);
+	}
 	printf("\nПосле модернизации:");
 	avto.OutputCars();
 	//Работа с массивом
