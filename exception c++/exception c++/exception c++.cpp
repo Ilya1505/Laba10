@@ -345,7 +345,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	printf("\nПосле модернизации:");
 	avto.OutputCars();
 	//Работа с массивом
-	/*cars avtoArray[3] = { 1000, 2000, 3000 };
+	cars avtoArray[3] = { 1000, 2000, 3000 };
 	for (int i = 0; i < 3; i++)
 	{
 		cout << endl << "Машина " << i + 1;
@@ -354,7 +354,16 @@ int _tmain(int argc, _TCHAR* argv[])
 	for (int i = 0; i < 3; i++)
 	{
 		cout << endl << "Машина " << i + 1;
-		avtoArray[i].PutCars();
+		do{
+			f = false;
+			try{ avtoArray[i].PutCars(); }
+			catch (exception &ex)
+			{
+				cout << "Ошибка ввода: " << ex.what() << endl;
+				cout << "Повторите попытку ввода!" << endl;
+				f = true;
+			}
+		} while (f);
 	}
 	printf("\nДанные после ввода:\n");
 	for (int i = 0; i < 3; i++)
@@ -364,7 +373,15 @@ int _tmain(int argc, _TCHAR* argv[])
 	}
 	for (int i = 0; i < 3; i++)
 	{
-		Drive(&avtoArray[i], 10);
+		try{ Drive(&avtoArray[i], 10); }
+		catch (MyException &ex)
+		{
+			cout << ex.what() << endl;
+			cout << "Код ошибки: " << ex.Code() << endl;
+			cout << "завершение работы программы!";
+			getch();
+			exit(1);
+		}
 	}
 	printf("После тест-драйва:\n");
 	for (int i = 0; i < 3; i++)
@@ -374,14 +391,22 @@ int _tmain(int argc, _TCHAR* argv[])
 	}
 	for (int i = 0; i < 3; i++)
 	{
-		avtoArray[i].Modern(100, 200, 500);
+		try{ avtoArray[i].Modern(100, 200, 500); }
+		catch (MyException &ex)
+		{
+			cout << ex.what() << endl;
+			cout << "Код ошибки: " << ex.Code() << endl;
+			cout << "завершение работы программы!";
+			getch();
+			exit(1);
+		}
 	}
 	printf("После модернизации:\n");
 	for (int i = 0; i < 3; i++)
 	{
 		cout << endl << "Машина " << i + 1;
 		avtoArray[i].OutputCars();
-	}*/
+	}
 	getch();
 	return 0;
 }
