@@ -7,9 +7,22 @@
 #include <iostream>
 #include <string>
 
-
 using namespace std;
 
+class MyException: public exception// класс наследник exception
+{
+private:
+	int CodeError;// код ошибки
+public:
+	MyException(char *msg, int CodeError) :exception(msg)
+	{
+		this->CodeError = CodeError;
+	}
+	int Code()
+	{
+		return CodeError;
+	}
+};
 class engine// двигатель
 {
 private:
