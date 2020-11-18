@@ -1,28 +1,40 @@
 package com.company;
+import java.text.ParseException;
 import java.util.Scanner;
 public class Main {
     public static void main(String[] args)
     {
-        engine dvs1 = new engine("no_name", 10, 100, 0, 1000);// конструктор со всеми параметрами
-        cars avto1 = new cars("no_name", "no_color", 2020, 1000, dvs1);// конструктор со всеми параметрами
-        engine dvs2 = new engine("no_name");// конструктор с одним параметром
-        cars avto2 = new cars(dvs2);// конструктор с одним параметром
-        cars avto3 = new cars();// конструктор без параметров
+        engine dvs = new engine("no_name", 10, 100, 0, 1000);// конструктор со всеми параметрами
+        cars avto = new cars("no_name", "no_color", 2020, 1000, dvs);// конструктор со всеми параметрами
         AfterDrive rezult = new AfterDrive();// объект вспомогательного класса
         int probeg;
-        avto1.OutputCars();
-        avto1.PutCars();
+        avto.OutputCars();
+        boolean f;
+        do {
+            f=false;
+        try {
+            avto.PutCars();
+        }catch (NumberFormatException ex) {
+           f=true;
+            System.out.println("Ошибка: " + ex);
+            System.out.println("Введите данные еще раз!");
+        }catch (MyExceptionRead ex) {
+            f = true;
+            System.out.println("Ошибка: " + ex);
+            System.out.println("Введите данные еще раз!");
+        }
+        }while (f);
         System.out.println(System.lineSeparator()+"Данные после ввода: ");
-        avto1.OutputCars();
-        avto1.Drive(rezult);
+        avto.OutputCars();
+        avto.Drive(rezult);
         probeg=rezult.km;
         System.out.println(System.lineSeparator()+"Пробег после тест-драйва: ");
         System.out.println(probeg+" КМ"+System.lineSeparator());
-        avto1.Modern(100, 200, 500);
+        avto.Modern(100, 200, 500);
         System.out.println("После модернизации: ");
-        avto1.OutputCars();
+        avto.OutputCars();
         // массив объектов
-        engine []arrayE = new engine[2];
+        /*engine []arrayE = new engine[2];
         for(int i=0;i<arrayE.length;i++)
         {
             arrayE[i] = new engine("no_name");// массив объектов созданных через конструктор с одним параметром
@@ -61,9 +73,32 @@ public class Main {
         for(int i=0; i<arrayC.length;i++)
         {	System.out.println(System.lineSeparator()+"машина "+(i+1));
             arrayC[i].OutputCars();
-        }
+        }*/
     }
 };
+class MyExceptionRead extends Exception
+{
+    private int Code;
+    MyExceptionRead(int Code)
+    {
+        this.Code=Code;
+    }
+    public String toString()
+    {
+        switch (Code)
+        {
+            case 1: return "некорректный ввод марки авто";
+            case 2: return "некорректный ввод цвета авто";
+            case 5: return "некорректный ввод марки двигателя";
+            case 6: return "некорректный ввод мощности";
+            case 7: return "некорректный ввод пробега";
+            case 8: return "некорректный ввод ресурса двигателя";
+            case 9: return "некорректный ввод веса двигателя";
+            default: return "неизвестная ошибка";
+        }
+
+    }
+}
 
 class AfterDrive// вспомогательный класс
 {
@@ -147,19 +182,24 @@ class engine// двигатель
     {
         probeg = 0;
     }
-    public void Read()// ввод данных
+    public void Read() throws NumberFormatException, MyExceptionRead// ввод данных
     {
         Scanner read = new Scanner(System.in);
         System.out.println("Введите марку двигателя: ");
         name=read.nextLine();
+        if(name.trim().length()==0) throw new MyExceptionRead(5);
         System.out.println("Введите мощность двигателя: ");
-        power=read.nextInt();
+        power=Integer.parseInt(read.nextLine());
+        if(power<50||power>1500) throw new MyExceptionRead(6);
         System.out.println("Введите пробег двигателя: ");
-        probeg=read.nextInt();
+        probeg=Integer.parseInt(read.nextLine());
+        if(probeg<0||probeg>1000000) throw new MyExceptionRead(7);
         System.out.println("Введите ресурс двигателя: ");
-        resurs=read.nextInt();
+        resurs=Integer.parseInt(read.nextLine());
+        if(resurs<0||resurs>1000000) throw new MyExceptionRead(8);
         System.out.println("Введите вес двигателя: ");
-        weight=read.nextDouble();
+        weight=Double.parseDouble(read.nextLine());
+        if(weight<10||weight>10000) throw new MyExceptionRead(9);
     }
     public void Print()// вывод данных
     {
@@ -231,17 +271,21 @@ class cars// класс авто
     {
         return price;
     }
-    public void PutCars()// функкция ввода данных
+    public void PutCars() throws NumberFormatException, MyExceptionRead // функкция ввода данных
     {
         Scanner read = new Scanner(System.in);
         System.out.println("Введите марку машины: ");
         name=read.nextLine();
+        if(name.trim().length()==0) throw new MyExceptionRead(1);
         System.out.println("Введите цвет машины: ");
         color=read.nextLine();
+        if(color.trim().length()==0) throw new MyExceptionRead(2);
         System.out.println("Введите год выпуска машины: ");
-        year=read.nextInt();
+        year=Integer.parseInt(read.nextLine());
+        if(color.trim().length()==0) throw new MyExceptionRead(3);
         System.out.println("Введите цену машины: ");
-        price=read.nextDouble();
+        price=Double.parseDouble(read.nextLine());
+        if(color.trim().length()==0) throw new MyExceptionRead(4);
         dvs.Read();
     }
     public void OutputCars()// функция вывода данных
