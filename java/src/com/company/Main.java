@@ -44,7 +44,7 @@ public class Main {
         System.out.println("После модернизации: ");
         avto.OutputCars();
         // массив объектов
-        /*engine []arrayE = new engine[2];
+        engine []arrayE = new engine[2];
         for(int i=0;i<arrayE.length;i++)
         {
             arrayE[i] = new engine("no_name");// массив объектов созданных через конструктор с одним параметром
@@ -61,7 +61,20 @@ public class Main {
         }
         for(int i=0; i<arrayC.length;i++)
         {	System.out.println(System.lineSeparator()+"машина "+(i+1));
-            arrayC[i].PutCars();
+            do {
+                f=false;
+                try {
+                    arrayC[i].PutCars();
+                }catch (NumberFormatException ex) {
+                    f=true;
+                    System.out.println("Ошибка: " + ex);
+                    System.out.println("Введите данные еще раз!");
+                }catch (MyExceptionRead ex) {
+                    f = true;
+                    System.out.println("Ошибка: " + ex);
+                    System.out.println("Введите данные еще раз!");
+                }
+            }while (f);
         }
         System.out.println(System.lineSeparator()+"Данные после ввода: ");
         for(int i=0; i<arrayC.length;i++)
@@ -70,20 +83,32 @@ public class Main {
         }
         System.out.println(System.lineSeparator()+"Пробег после тест-драйва: ");
         for(int i=0; i<arrayC.length;i++)
-        {	arrayC[i].Drive(rezult);
-            probeg=rezult.km;
+        {
+            try{probeg=arrayC[i].Drive(10);}
+            catch(MyExceptionOther ex)
+            {
+                System.out.println("Ошибка: "+ex);
+                System.out.println("Завершение работы программы!");
+                System.exit(1);
+            }
             System.out.println(System.lineSeparator()+"машина "+(i+1));
             System.out.println(probeg+" КМ");
         }
         for(int i=0; i<arrayC.length;i++)
         {
-            arrayC[i].Modern(100, 200, 500);
+            try{arrayC[i].Modern(100, 200, 500);}
+            catch(MyExceptionOther ex)
+            {
+                System.out.println("Ошибка: "+ex);
+                System.out.println("Завершение работы программы!");
+                System.exit(1);
+            }
         }
         System.out.println(System.lineSeparator()+"После модернизации: ");
         for(int i=0; i<arrayC.length;i++)
         {	System.out.println(System.lineSeparator()+"машина "+(i+1));
             arrayC[i].OutputCars();
-        }*/
+        }
     }
 };
 class MyExceptionRead extends Exception
