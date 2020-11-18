@@ -6,8 +6,7 @@ public class Main {
     {
         engine dvs = new engine("no_name", 10, 100, 0, 1000);// конструктор со всеми параметрами
         cars avto = new cars("no_name", "no_color", 2020, 1000, dvs);// конструктор со всеми параметрами
-        AfterDrive rezult = new AfterDrive();// объект вспомогательного класса
-        int probeg;
+        int probeg=0;
         avto.OutputCars();
         boolean f;
         do {
@@ -26,11 +25,22 @@ public class Main {
         }while (f);
         System.out.println(System.lineSeparator()+"Данные после ввода: ");
         avto.OutputCars();
-        avto.Drive(rezult);
-        probeg=rezult.km;
+        try{probeg=avto.Drive(10);}
+        catch(MyExceptionOther ex)
+        {
+            System.out.println("Ошибка: "+ex);
+            System.out.println("Завершение работы программы!");
+            System.exit(1);
+        }
         System.out.println(System.lineSeparator()+"Пробег после тест-драйва: ");
         System.out.println(probeg+" КМ"+System.lineSeparator());
-        avto.Modern(100, 200, 500);
+        try{avto.Modern(100, 200, 500);}
+        catch(MyExceptionOther ex)
+        {
+            System.out.println("Ошибка: "+ex);
+            System.out.println("Завершение работы программы!");
+            System.exit(1);
+        }
         System.out.println("После модернизации: ");
         avto.OutputCars();
         // массив объектов
@@ -99,12 +109,19 @@ class MyExceptionRead extends Exception
 
     }
 }
-
-class AfterDrive// вспомогательный класс
-{
-    public int km;
+class MyExceptionOther extends Exception
+{   private int Code;
+    MyExceptionOther(int Code)
+    {
+        this.Code=Code;
+    }
+    public String toString()
+    {
+        if(Code==1) return "некорректное расстояние тест-драйва!";
+        if(Code==2) return "введены некорректные параметры модернизации";
+        return "неизвестная ошибка";
+    }
 }
-
 class engine// двигатель
 {
     private String name=new String();// марка двигателя
@@ -271,7 +288,7 @@ class cars// класс авто
     {
         return price;
     }
-    public void PutCars() throws NumberFormatException, MyExceptionRead // функкция ввода данных
+    public void PutCars() throws NumberFormatException, MyExceptionRead // выброс двух исключений в фунцкию Main
     {
         Scanner read = new Scanner(System.in);
         System.out.println("Введите марку машины: ");
@@ -296,12 +313,17 @@ class cars// класс авто
         System.out.println("Цена: " + price);
         dvs.Print();
     }
-    public void Drive(AfterDrive rezult)// тест-драйв
+    public int Drive(int km) throws MyExceptionOther// тест-драйв
     {
-        rezult.km = dvs.GetProbeg() + 10;
+        int probeg;
+        if(km<0||km>100) throw new MyExceptionOther(1);
+        probeg=dvs.GetProbeg()+km;
+        dvs.SetProbeg(probeg);
+        return probeg;
     }
-    public void Modern(double NewWeight, int NewPower, int NewResurs)// модернизация
-    {
+    public void Modern(double NewWeight, int NewPower, int NewResurs) throws  MyExceptionOther// модернизация
+    {if(NewWeight<0||NewWeight>1500||
+            NewPower<0||NewPower>1500||NewResurs<10||NewResurs>1000000) throw new MyExceptionOther(2);
         dvs.SetWeight(NewWeight);
         dvs.SetPower(NewPower);
         dvs.SetResurs(NewResurs);
