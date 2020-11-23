@@ -8,6 +8,7 @@ namespace exception
 {
     class Program
     {
+        static Exception ex = new Exception("");
         static void Main(string[] args)
         {
             Console.WriteLine("Инициализация:\n");
@@ -20,6 +21,12 @@ namespace exception
                 f = false;
                 try { avto.PutCars(); }
                 catch (FormatException ex)
+                {
+                    f = true;
+                    Console.WriteLine("Ошибка: " + ex.Message);
+                    Console.WriteLine("Введите данные еще раз");
+                }
+                catch(Exception ex)
                 {
                     f = true;
                     Console.WriteLine("Ошибка: " + ex.Message);
@@ -168,14 +175,19 @@ namespace exception
             {
                 Console.WriteLine("Введите марку двигателя: ");
                 this.name = Console.ReadLine();
+                if (name.Length == 0) throw ex = new Exception("пустая марка двигателя");
                 Console.WriteLine("Введите мощность двигателя: ");
                 this.power = Convert.ToInt32(Console.ReadLine());
+                if (power<0||power>100000) throw ex = new Exception("некорректная мощность двигателя");
                 Console.WriteLine("Введите пробег двигателя: ");
                 this.probeg = Convert.ToInt32(Console.ReadLine());
+                if (probeg < 0 || power > 1000000) throw ex = new Exception("некорректный пробег");
                 Console.WriteLine("Введите ресурс двигателя: ");
                 this.resurs = Convert.ToInt32(Console.ReadLine());
+                if (resurs < 0 || power > 1000000) throw ex = new Exception("некорректный двигателя");
                 Console.WriteLine("Введите вес двигателя: ");
                 this.weight = Convert.ToDouble(Console.ReadLine());
+                if (weight< 0 || weight > 1000000) throw ex = new Exception("некорректный вес двигателя");
             }
             public void Print()// вывод данных
             {
@@ -282,12 +294,16 @@ namespace exception
             {
                 Console.WriteLine("Введите марку машины: ");
                 name = Console.ReadLine();
+                if (name.Length == 0) throw ex = new Exception("пустая строка марки авто");
                 Console.WriteLine("Введите цвет машины: ");
                 color = Console.ReadLine();
+                if (color.Length == 0) throw ex = new Exception("пустая строка цвета авто");
                 Console.WriteLine("Введите год выпуска машины: ");
                 year = Convert.ToInt32(Console.ReadLine());
+                if (year<2000||year>2020) throw ex = new Exception("неккоректный год выпуска авто");
                 Console.WriteLine("Введите цену машины: ");
                 price = Convert.ToDouble(Console.ReadLine());
+                if (price < 0 || price > 10000000) throw ex = new Exception("неккоректная цена авто");
                 dvs.Read();
             }
             public void OutputCars()// функция вывода данных
