@@ -14,7 +14,18 @@ namespace exception
             engine dvs = new engine("No_Name", 50, 150, 0, 1000);// конструктор со всеми параметрами
             cars avto = new cars("no_name", "no_color", 2020, 1000, dvs);// конструктор со всеми параметрами
             avto.OutputCars();
-            avto.PutCars();
+            bool f;
+            do
+            {
+                f = false;
+                try { avto.PutCars(); }
+                catch (FormatException ex)
+                {
+                    f = true;
+                    Console.WriteLine("Ошибка: " + ex.Message);
+                    Console.WriteLine("Введите данные еще раз");
+                }
+            } while (f);
             Console.WriteLine("\nДанные после ввода:");
             avto.OutputCars();
             int ProbegFirst = 1;// инициализация переменной для возврата через ref
