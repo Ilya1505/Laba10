@@ -11,22 +11,19 @@ namespace exception
         static void Main(string[] args)
         {
             Console.WriteLine("Инициализация:\n");
-            engine dvs1 = new engine("No_Name", 50, 150, 0, 1000);// конструктор со всеми параметрами
-            cars avto1 = new cars("no_name", "no_color", 2020, 1000, dvs1);// конструктор со всеми параметрами
-            engine dvs2 = new engine("No_Name");// конструктор с одним параметром
-            cars avto2 = new cars(dvs2);// конструктор с одним параметром
-            cars avto3 = new cars();// конструктор без параметров
-            avto1.OutputCars();
-            avto1.PutCars();
+            engine dvs = new engine("No_Name", 50, 150, 0, 1000);// конструктор со всеми параметрами
+            cars avto = new cars("no_name", "no_color", 2020, 1000, dvs);// конструктор со всеми параметрами
+            avto.OutputCars();
+            avto.PutCars();
             Console.WriteLine("\nДанные после ввода:");
-            avto1.OutputCars();
+            avto.OutputCars();
             int ProbegFirst = 1;// инициализация переменной для возврата через ref
-            avto1.Drive(ref ProbegFirst);
+            avto.Drive(ref ProbegFirst);
             Console.WriteLine("\nПробег после тест-драйва: ");
             Console.WriteLine(ProbegFirst);
-            avto1.Modern(100, 200, 500);
+            avto.Modern(100, 200, 500);
             Console.WriteLine("\n\nПосле модернизации:");
-            avto1.OutputCars();
+            avto.OutputCars();
             // объявление и инициализация массива автомобилей
             engine[] arrayE = new engine[2];
             cars[] arrayC = new cars[2];
