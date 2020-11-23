@@ -263,17 +263,6 @@ public:
 		cin >> price;
 		if (price<=0) throw exception("Введена неккоректная цена авто!!!");
 		dvs.Read();
-		//bool f;
-		//do{
-		//	f = false;
-		//	try{ dvs.Read(); }
-		//	catch (exception &ex)
-		//	{
-		//		cout << "Ошибка ввода: " << ex.what() << endl;
-		//		cout << "Повторите попытку ввода!" << endl;
-		//		f = true;
-		//	}
-		//} while (f);
 	}
 	void Modern(double NewWeight, int NewPower, int NewResurs)// модернизация
 	{

@@ -2,7 +2,7 @@ package com.company;
 import java.text.ParseException;
 import java.util.Scanner;
 public class Main {
-    public static void main(String[] args)
+    public static void main(String[] args) throws NumberFormatException, MyExceptionRead
     {
         engine dvs = new engine("no_name", 10, 100, 0, 1000);// конструктор со всеми параметрами
         cars avto = new cars("no_name", "no_color", 2020, 1000, dvs);// конструктор со всеми параметрами
