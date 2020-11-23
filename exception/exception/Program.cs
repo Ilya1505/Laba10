@@ -48,7 +48,9 @@ namespace exception
             try { avto.Modern(100, 200, 500); }
             catch(Exception ex)
             {
-
+                Console.WriteLine("Ошибка: " + ex.Message);
+                Console.WriteLine("Завершение работы программы");
+                Environment.Exit(1);
             }
             Console.WriteLine("\n\nПосле модернизации:");
             avto.OutputCars();
@@ -331,6 +333,11 @@ namespace exception
             }
             public void Modern(Double NewWeight, Int32 NewPower, Int32 NewResurs)// модернизация
             {
+                if (NewWeight < 0 || NewWeight > 15000 ||
+                    NewPower < 0 || NewPower > 15000 || NewResurs < 0 || NewResurs > 1000000)
+                {
+                    ex = new Exception("некорректные данные модернизации");
+                }
                 dvs.Weight = NewWeight;
                 dvs.Power = NewPower;
                 dvs.Resurs = NewResurs;
