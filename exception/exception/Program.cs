@@ -8,7 +8,7 @@ namespace exception
 {
     class Program
     {
-        static Exception ex = new Exception("");
+        static Exception ex;// исключение класса ex
         static void Main(string[] args)
         {
             Console.WriteLine("Инициализация:\n");
@@ -20,13 +20,13 @@ namespace exception
             {
                 f = false;
                 try { avto.PutCars(); }
-                catch (FormatException ex)
+                catch (FormatException ex)// обработка программного исключения
                 {
                     f = true;
                     Console.WriteLine("Ошибка: " + ex.Message);
                     Console.WriteLine("Введите данные еще раз");
                 }
-                catch(Exception ex)
+                catch(Exception ex)// обработка пользовательского исключения
                 {
                     f = true;
                     Console.WriteLine("Ошибка: " + ex.Message);
@@ -37,7 +37,7 @@ namespace exception
             avto.OutputCars();
             int probegAfterDrive=0;
             try { probegAfterDrive = avto.Drive(10); }
-            catch(Exception ex)
+            catch (Exception ex)// обработка пользовательского исключения
             {
                 Console.WriteLine("Ошибка: " + ex.Message);
                 Console.WriteLine("Завершение работы программы");
@@ -46,7 +46,7 @@ namespace exception
             Console.Write("\nПробег после тест-драйва: ");
             Console.WriteLine(probegAfterDrive);
             try { avto.Modern(100, 200, 500); }
-            catch(Exception ex)
+            catch (Exception ex)// обработка пользовательского исключения
             {
                 Console.WriteLine("Ошибка: " + ex.Message);
                 Console.WriteLine("Завершение работы программы");
@@ -220,7 +220,7 @@ namespace exception
             {
                 Console.WriteLine("Введите марку двигателя: ");
                 this.name = Console.ReadLine();
-                if (name.Length == 0) throw ex = new Exception("пустая марка двигателя");
+                if (name.Length == 0) throw ex = new Exception("пустая марка двигателя");// создание объекта класса Exception
                 Console.WriteLine("Введите мощность двигателя: ");
                 this.power = Convert.ToInt32(Console.ReadLine());
                 if (power<0||power>100000) throw ex = new Exception("некорректная мощность двигателя");
@@ -348,7 +348,7 @@ namespace exception
                 if (year<2000||year>2020) throw ex = new Exception("неккоректный год выпуска авто");
                 Console.WriteLine("Введите цену машины: ");
                 price = Convert.ToDouble(Console.ReadLine());
-                if (price < 0 || price > 10000000) throw ex = new Exception("неккоректная цена авто");
+                if (price < 1 || price > 10000000) throw ex = new Exception("неккоректная цена авто");
                 dvs.Read();
             }
             public void OutputCars()// функция вывода данных

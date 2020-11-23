@@ -2,7 +2,7 @@ package com.company;
 import java.text.ParseException;
 import java.util.Scanner;
 public class Main {
-    public static void main(String[] args) throws NumberFormatException, MyExceptionRead
+    public static void main(String[] args)
     {
         engine dvs = new engine("no_name", 10, 100, 0, 1000);// конструктор со всеми параметрами
         cars avto = new cars("no_name", "no_color", 2020, 1000, dvs);// конструктор со всеми параметрами
@@ -13,11 +13,11 @@ public class Main {
             f=false;
         try {
             avto.PutCars();
-        }catch (NumberFormatException ex) {
+        }catch (NumberFormatException ex) {//обработка программного исключения
            f=true;
             System.out.println("Ошибка: " + ex);
             System.out.println("Введите данные еще раз!");
-        }catch (MyExceptionRead ex) {
+        }catch (MyExceptionRead ex) {//обработка пользовательского исключения
             f = true;
             System.out.println("Ошибка: " + ex);
             System.out.println("Введите данные еще раз!");
@@ -111,7 +111,7 @@ public class Main {
         }
     }
 };
-class MyExceptionRead extends Exception
+class MyExceptionRead extends Exception// класс исключений при чтении данных, наследник общего класса Exception
 {
     private int Code;
     MyExceptionRead(int Code)
@@ -134,7 +134,7 @@ class MyExceptionRead extends Exception
 
     }
 }
-class MyExceptionOther extends Exception
+class MyExceptionOther extends Exception// класс исключений при тест-драйве и модернизации, наследник общего класса Exception
 {   private int Code;
     MyExceptionOther(int Code)
     {
@@ -229,7 +229,7 @@ class engine// двигатель
         Scanner read = new Scanner(System.in);
         System.out.println("Введите марку двигателя: ");
         name=read.nextLine();
-        if(name.trim().length()==0) throw new MyExceptionRead(5);
+        if(name.trim().length()==0) throw new MyExceptionRead(5);// создание пользовательского исключения, принимает код ошибки
         System.out.println("Введите мощность двигателя: ");
         power=Integer.parseInt(read.nextLine());
         if(power<50||power>1500) throw new MyExceptionRead(6);
