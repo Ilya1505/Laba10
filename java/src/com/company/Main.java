@@ -324,10 +324,10 @@ class cars// класс авто
         if(color.trim().length()==0) throw new MyExceptionRead(2);
         System.out.println("Введите год выпуска машины: ");
         year=Integer.parseInt(read.nextLine());
-        if(color.trim().length()==0) throw new MyExceptionRead(3);
+        if(year<2000||year>2020) throw new MyExceptionRead(3);
         System.out.println("Введите цену машины: ");
         price=Double.parseDouble(read.nextLine());
-        if(color.trim().length()==0) throw new MyExceptionRead(4);
+        if(price<1||price>1000000) throw new MyExceptionRead(4);
         dvs.Read();
     }
     public void OutputCars()// функция вывода данных
