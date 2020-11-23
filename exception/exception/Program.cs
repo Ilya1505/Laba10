@@ -35,7 +35,7 @@ namespace exception
             } while (f);
             Console.WriteLine("\nДанные после ввода:");
             avto.OutputCars();
-            int probegAfterDrive;
+            int probegAfterDrive=0;
             try { probegAfterDrive = avto.Drive(10); }
             catch(Exception ex)
             {
@@ -68,7 +68,23 @@ namespace exception
             for (int i = 0; i < arrayC.Length; i++)// заполнение массива
             {
                 Console.WriteLine("\nМашина " + (i + 1));
-                arrayC[i].PutCars();
+                do
+                {
+                    f = false;
+                    try { arrayC[i].PutCars(); }
+                    catch (FormatException ex)
+                    {
+                        f = true;
+                        Console.WriteLine("Ошибка: " + ex.Message);
+                        Console.WriteLine("Введите данные еще раз");
+                    }
+                    catch (Exception ex)
+                    {
+                        f = true;
+                        Console.WriteLine("Ошибка: " + ex.Message);
+                        Console.WriteLine("Введите данные еще раз");
+                    }
+                } while (f);
             }
             Console.WriteLine("\nДанные после ввода:");
             for (int i = 0; i < arrayC.Length; i++)// заполнение массива
@@ -76,17 +92,34 @@ namespace exception
                 Console.WriteLine("\nМашина " + (i + 1));
                 arrayC[i].OutputCars();
             }
+            for (int i = 0; i < arrayC.Length; i++)
+            {
+                try { probegAfterDrive = arrayC[i].Drive(10); }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Ошибка: " + ex.Message);
+                    Console.WriteLine("Завершение работы программы");
+                    Environment.Exit(1);
+                }
+            }
             Console.WriteLine("\nПробег после тест-драйва: ");
             for (int i = 0; i < arrayC.Length; i++)// возвращаемы параметр через out
             {
-                int ProbegTwo;
-                arrayC[i].DriveTwo(out ProbegTwo);
-                Console.WriteLine("\nМашина " + (i + 1) + ": " + ProbegTwo + "КМ");
+                Console.WriteLine("\nМашина " + (i + 1) + ": " + probegAfterDrive + "КМ");
+            }
+            for (int i = 0; i < arrayC.Length; i++)
+            {
+                try { arrayC[i].Modern(100, 200, 500); }
+                catch(Exception ex)
+                {
+                    Console.WriteLine("Ошибка: " + ex.Message);
+                    Console.WriteLine("Завершение работы программы");
+                    Environment.Exit(1);
+                }
             }
             Console.WriteLine("\nПосле модернизации: ");
             for (int i = 0; i < arrayC.Length; i++)
             {
-                arrayC[i].Modern(100, 200, 500);
                 Console.WriteLine("\n");
                 arrayC[i].OutputCars();
             }
