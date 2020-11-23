@@ -35,11 +35,21 @@ namespace exception
             } while (f);
             Console.WriteLine("\nДанные после ввода:");
             avto.OutputCars();
-            int ProbegFirst = 1;// инициализация переменной для возврата через ref
-            avto.Drive(ref ProbegFirst);
-            Console.WriteLine("\nПробег после тест-драйва: ");
-            Console.WriteLine(ProbegFirst);
-            avto.Modern(100, 200, 500);
+            int probegAfterDrive;
+            try { probegAfterDrive = avto.Drive(10); }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Ошибка: " + ex.Message);
+                Console.WriteLine("Завершение работы программы");
+                Environment.Exit(1);
+            }
+            Console.Write("\nПробег после тест-драйва: ");
+            Console.WriteLine(probegAfterDrive);
+            try { avto.Modern(100, 200, 500); }
+            catch(Exception ex)
+            {
+
+            }
             Console.WriteLine("\n\nПосле модернизации:");
             avto.OutputCars();
             // объявление и инициализация массива автомобилей
@@ -314,13 +324,10 @@ namespace exception
                 Console.WriteLine("Цена: " + price);
                 dvs.Print();
             }
-            public void Drive(ref int probeg)// тест-драйв
+            public int Drive(int km)// тест-драйв
             {
-                probeg = dvs.Probeg + 10;
-            }
-            public void DriveTwo(out int probeg)// тест-драйв
-            {
-                probeg = dvs.Probeg + 20;
+                if (km < 0 || km > 100) throw ex = new Exception("некорректное расстояние тест-драйва");
+                return dvs.Probeg = dvs.Probeg + km;
             }
             public void Modern(Double NewWeight, Int32 NewPower, Int32 NewResurs)// модернизация
             {
